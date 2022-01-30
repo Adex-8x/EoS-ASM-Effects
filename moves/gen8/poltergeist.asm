@@ -45,6 +45,10 @@
 		bl DealDamage
 		cmp r0,#0
 		beq @@ret
+		ldr r0,[r4,#+0xb4]
+		ldrsh r1,[r0,#+0x10]
+		cmp r1,#0
+		ble @@ret
 		mov r0,#0
 		mov r1,r4
 		mov r2,#0
