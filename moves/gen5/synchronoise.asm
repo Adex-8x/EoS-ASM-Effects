@@ -35,7 +35,7 @@
 		ldrb r3,[r2,#+0x5f]
 		ldrb r2,[r2,#+0x5e]
 		cmp r0,#0
-		beq @@second_check ; Technically, the first ability shouldn't ever be Nothing, but it doesn't hurt to be sure!
+		beq @@second_check ; Technically, the first type shouldn't ever be Nothing, but it doesn't hurt to be sure!
 		cmp r0,r2
 		beq @@success
 		cmp r0,r3
