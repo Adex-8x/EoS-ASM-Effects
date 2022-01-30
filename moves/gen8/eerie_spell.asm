@@ -67,6 +67,6 @@
 		b MoveJumpAddress
 		.pool
 	lost_PP:
-		.asciiz "[string:0] lost 3 PP under[R]the influence of the spell!"
+		.asciiz "[string:0] lost 3 PP under[R]the spell's influence!"
 	.endarea
 .close
