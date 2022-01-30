@@ -36,6 +36,9 @@
 		cmp r0,#0
 		beq @@ret
 		ldr r0,[r4,#+0xb4]
+		ldrsh r1,[r0,#+0x10]
+		cmp r1,#0
+		ble @@ret
 		ldrb r1,[r0,#+0x4a]
 		cmp r1,#0x12
 		cmpne r1,#0x14
