@@ -1,7 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; U-Turn GTI
 ; Deals damage, then switches with an ally if one is directly behind them!
-; TODO: Enemies not supported (yet)
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
@@ -10,7 +9,7 @@
 
 .definelabel MaxSize, 0x2598
 
-; TODO: EU versions supported only (offsets for GetTilePointer and SwapEntity needed)
+; TODO: EU versions supported only (GetTilePointer and SwapEntity US offsets needed)
 
 ; For US
 ;.include "lib/stdlib_us.asm"
