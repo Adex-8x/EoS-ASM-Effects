@@ -29,8 +29,8 @@
 	.area MaxSize
 		
 		ldr r0,[r4,#+0xb4]
-		ldrh r1,[r0,#+0x28]
-		ldrh r2,[r0,#+0x2e]
+		ldrsh r1,[r0,#+0x28]
+		ldrsh r2,[r0,#+0x2e]
 		ldr r3,[r0,#+0x3c]
 		push {r0,r1,r2,r3}
 		mov r1,#10
