@@ -28,8 +28,7 @@
 	.org MoveStartAddress
 	.area MaxSize
 
-		; This won't be elegant and I don't care haha
-		; AttackStatDown(r0: User, r1: Target, r2: StatType, r3: NbStages, [r13]: ???, [r13+0x4]: ???)
+		; This won't be elegant in the slightest
 		mov r0,r9
 		mov r1,r4
 		mov r2,#0
