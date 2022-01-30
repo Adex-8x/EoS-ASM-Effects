@@ -40,8 +40,6 @@
 		cmp r0,#0
 		beq @@ret
 		ldr r0,[r9,#+0xb4]
-		ldrb r1,[r0,#+0x8]
-		push r1
 		ldrb r12,[r0,#+0x4c] ; User Direction
 		ldrh r0,[r9,#+0x4] ; User X Pos
 		ldrh r1,[r9,#+0x6] ; User Y Pos
@@ -75,13 +73,24 @@
 		sub r1,r1,#1
 @@check_tile:
 		bl GetTilePointer
-		pop r1
 		ldr r0,[r0,#+0xc]
 		cmp r0,#0
 		beq @@ret ; If null, don't switch!
-		ldr r3,[r0,#+0xb4]
-		ldrb r3,[r3,#+0x8] ; Non-Team Flag
-		cmp r1,r3
+		ldr r12,[r0,#+0xb4]
+		ldrb r1,[r12,#0x6]
+		ldrb r2,[r12,#0x8]
+		cmp r1,#1
+		cmpeq r2,#0
+		moveq r12,#1
+		movne r12,#0
+		ldr r1,[r9,#+0xb4]
+		ldrb r2,[r1,#0x6]
+		ldrb r3,[r1,#0x8]
+		cmp r2,#1
+		cmpeq r3,#0
+		moveq r1,#1
+		movne r1,#0
+		cmp r12,r1
 		bne @@ret
 		mov r1,r9
 		mov r2,#0
