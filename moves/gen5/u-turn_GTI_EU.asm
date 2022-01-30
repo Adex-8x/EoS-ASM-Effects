@@ -16,7 +16,7 @@
 ;.include "lib/dunlib_us.asm"
 ;.definelabel MoveStartAddress, 0x02330134
 ; definelabel MoveJumpAddress, 0x023326CC
-;.definelabel GetTilePointer, 0x23360CC ; TODO: Find appropriate offset
+;.definelabel GetTilePointer, 0x23360CC
 ;.definelabel SwapEntity, 0x22EB1E8
 
 ; For EU
