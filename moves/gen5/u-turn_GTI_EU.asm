@@ -9,15 +9,13 @@
 
 .definelabel MaxSize, 0x2598
 
-; TODO: EU versions supported only (GetTilePointer and SwapEntity US offsets needed)
+; TODO: EU versions supported only (GetTilePointer and SwapEntity offsets needed)
 
 ; For US
 ;.include "lib/stdlib_us.asm"
 ;.include "lib/dunlib_us.asm"
 ;.definelabel MoveStartAddress, 0x02330134
 ; definelabel MoveJumpAddress, 0x023326CC
-;.definelabel GetTilePointer, 0x23360CC
-;.definelabel SwapEntity, 0x22EB1E8
 
 ; For EU
 .include "lib/stdlib_eu.asm"
