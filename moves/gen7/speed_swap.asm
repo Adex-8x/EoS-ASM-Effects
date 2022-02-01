@@ -28,22 +28,20 @@
 	.org MoveStartAddress
 	.area MaxSize
 
-		; This code is the least elegant thing I've ever written, I'm sorry
-		ldr r0,[r9,#+0xb4]
-		ldr r2,[r4,#+0xb4]
-		mov r12,#0x110
-@@word_loop:
-		ldr r1,[r0,r12]
-		ldr r3,[r2,r12]
-		str r1,[r2,r12]
-		str r3,[r0,r12]
-		cmp r12,#0x11c
-		addlt r12,r12,#0x4
-		blt @@word_loop
-		ldrh r1,[r0,r12]
-		ldrh r3,[r2,r12]
-		strh r1,[r2,r12]
-		strh r3,[r0,r12]
+		push r0-r7
+		ldr r6,[r9,0B4h]
+		ldr r7,[r4,0B4h]
+		add r6,r6,110h
+		add r7,r7,110h
+		ldmia [r6],r0-r2
+		ldmia [r7],r3-r5
+		stmia [r7]!,r0-r2
+		stmia [r6]!,r3-r5
+		ldrh r0,[r6]
+		ldrh r1,[r7]
+		strh r0,[r7]
+		strh r1,[r6]
+		pop r0-r7
 		mov r0,#0
 		mov r1,r9
 		mov r2,#0
