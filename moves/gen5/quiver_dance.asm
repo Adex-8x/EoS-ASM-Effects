@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
-; V-Create
-; Deals damage, but lowers the user's Defense, Special Defense, and Speed each by one stage!
+; Quiver Dance
+; Raises the user's Special Attack, Special Defense, and Speed by one stage each!
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
