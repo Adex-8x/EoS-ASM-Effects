@@ -1,7 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Strength Sap
 ; Lowers the target's Attack stat, then gains HP equal to the target's Attack stat before the move!
-; NOTE: This move has not been thoroughly tested! Please inform Adex of any oddities or if you notice any glaring issues with how the HP is raised!
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
