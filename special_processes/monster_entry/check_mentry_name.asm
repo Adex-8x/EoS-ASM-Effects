@@ -1,5 +1,5 @@
 ; ------------------------------------------------------------------------------
-; Check Name
+; Check Mentry Name
 ; Checks if a Chimecho Assembly member's name is equal to a predefined name! Slot 0 is the player, 1 is the partner, and 5+ are recruitables.
 ; Param 1: ent_id
 ; Returns: 0 if unequal, 1 if equal.
