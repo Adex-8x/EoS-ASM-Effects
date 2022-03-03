@@ -10,7 +10,7 @@
 .nds
 .arm
 
-; TODO: US version supported only (SetGameVar EU offset needed)
+; Uncomment/comment the following labels depending on your version.
 
 .definelabel MaxSize, 0x810
 
