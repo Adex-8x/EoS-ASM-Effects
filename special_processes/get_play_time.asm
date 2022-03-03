@@ -26,6 +26,7 @@
 ;.definelabel ProcStartAddress, 0x022E7B88
 ;.definelabel ProcJumpAddress, 0x022E8400
 ;.definelabel AssemblyPointer, 0x020B138C
+;.definelabel SetGameVar, 0x0204BB58
 
 ; File creation
 .create "./code_out.bin", 0x022E7248 ; For EU: 0x022E7B88
