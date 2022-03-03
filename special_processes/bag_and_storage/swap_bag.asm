@@ -12,7 +12,7 @@
 
 .definelabel MaxSize, 0x810
 
-; TODO: Currently only US versions are supported (Copy4BytesArray and ClearItem EU offsets needed)
+; Uncomment/comment the following labels depending on your version.
 
 ; For US
 .include "lib/stdlib_us.asm"
@@ -28,6 +28,8 @@
 ;.definelabel ProcStartAddress, 0x022E7B88
 ;.definelabel ProcJumpAddress, 0x022E8400
 ;.definelabel BasePointer, 0x20aff70
+;.definelabel Copy4BytesArray, 0x0200330C
+;.definelabel ClearItem, 0x0200D8A4
 ;.definelabel TeamPtr, 0x20B138C
 
 ; File creation
