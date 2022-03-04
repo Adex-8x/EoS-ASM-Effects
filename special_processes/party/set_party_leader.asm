@@ -3,7 +3,7 @@
 ; Sets a member of the specified team as the leader (0 is Maingame, 1 is Special Episode, 2 is Rescue, and -1 is the current team)!
 ; Param 1: team_id
 ; Param 2: member_id (0-3)
-; Returns: 1 if successful, 0 if not.
+; Returns: 1 if successful, 0 if not (will occur if trying to set the leader to an invalid team member).
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
@@ -48,6 +48,12 @@
     		addge r0,r0,#0x6C
 		movge r1,#0x1A0
     		mlage r0,r7,r1,r0
+		mov r1,#0x68
+		mla r2,r6,r1,r0
+		ldrb r2,[r2]
+		cmp r2,#0
+		moveq r0,#0
+		beq @@ret
 		add r0,r0,#0x1
 		mov r1,#0x0
 @@member_loop:
