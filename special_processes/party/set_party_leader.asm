@@ -32,7 +32,7 @@
 	.area MaxSize
 		
 		mov r0,#0
-		cmp r7,#3
+		cmp r7,#2
 		bgt @@ret
 		cmp r6,#0
 		blt @@ret
