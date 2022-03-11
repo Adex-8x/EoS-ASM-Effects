@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Copy Monster Entry
-; Copies a Chimecho Assembly's data onto another's!
+; Copies a Chimecho Assembly member's data onto another's!
 ; If you are using this on current party members, call Irdkwia's "Remove Party" process before this one!
 ; Param 1: ent_id_to_copy
 ; Param 2: ent_id_to_overwrite
