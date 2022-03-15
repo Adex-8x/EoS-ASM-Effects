@@ -9,25 +9,26 @@
 
 .definelabel MaxSize, 0x2598
 
-; TODO: EU versions supported only (GetTilePointer US address needed)
+; Uncomment/comment the following labels depending on your version.
 
 ; For US
-;.include "lib/stdlib_us.asm"
-;.include "lib/dunlib_us.asm"
-;.definelabel MoveStartAddress, 0x02330134
-;.definelabel MoveJumpAddress, 0x023326CC
-;.definelabel SwapEntity, 0x022EB1E8
+.include "lib/stdlib_us.asm"
+.include "lib/dunlib_us.asm"
+.definelabel MoveStartAddress, 0x02330134
+.definelabel MoveJumpAddress, 0x023326CC
+.definelabel SwapEntity, 0x022EB178
+.definelabel GetTilePointer, 0x23360FC
 
 ; For EU
-.include "lib/stdlib_eu.asm"
-.include "lib/dunlib_eu.asm"
-.definelabel MoveStartAddress, 0x02330B74
-.definelabel MoveJumpAddress, 0x0233310C
-.definelabel GetTilePointer, 0x2336CCC
-.definelabel SwapEntity, 0x022EBB28
+;.include "lib/stdlib_eu.asm"
+;.include "lib/dunlib_eu.asm"
+;.definelabel MoveStartAddress, 0x02330B74
+;.definelabel MoveJumpAddress, 0x0233310C
+;.definelabel GetTilePointer, 0x2336CCC
+;.definelabel SwapEntity, 0x022EBB28
 
 ; File creation
-.create "./code_out.bin", 0x02330B74 ; For US: 0x02330134
+.create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
 	.org MoveStartAddress
 	.area MaxSize
 
