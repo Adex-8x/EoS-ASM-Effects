@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Mentry to Trade Team Entry
-; Copies a member of Chimecho Assembly's data to a a Trade Team member!
+; Copies a member of Chimecho Assembly's data to a Trade Team member!
 ; For Chimecho Assembly: Slot 0 is the player, 1 is the partner, and 5+ are recruitables.
 ; For Trade Team: Slots 0-3 are available.
 ; Param 1: mentry_id
