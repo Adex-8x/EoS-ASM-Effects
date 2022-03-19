@@ -1,8 +1,8 @@
 ; ------------------------------------------------------------------------------
 ; Mentry to Trade Team Entry
 ; Copies a member of Chimecho Assembly's data to a a Trade Team member!
-; Param 1: ent_id_to_copy
-; Param 2: ent_id_to_overwrite
+; Param 1: trade_team_entry_id
+; Param 2: mentry_id
 ; Returns: Nothing
 ; ------------------------------------------------------------------------------
 
