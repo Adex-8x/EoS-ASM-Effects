@@ -1,9 +1,11 @@
 ; ------------------------------------------------------------------------------
 ; Mentry to Trade Team Entry
 ; Copies a member of Chimecho Assembly's data to a a Trade Team member!
-; Param 1: trade_team_entry_id
-; Param 2: mentry_id
-; Returns: Nothing
+; For Chimecho Assembly: Slot 0 is the player, 1 is the partner, and 5+ are recruitables.
+; For Trade Team: Slots 0-3 are available.
+; Param 1: mentry_id
+; Param 2: trade_team_entry_id
+; Returns: 1 if successful, 0 if an out-of-bounds Trade Team slot was provided.
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
@@ -33,16 +35,22 @@
 	.org ProcStartAddress
 	.area MaxSize
 
+		mov r0,#0
+		cmp r6,#0
+		blt @@ret
+		cmp r6,#3
+		bgt @@ret
 		mov r2,#0x44
 		ldr r1,=AssemblyPointer
-		ldr r0,[r1]
-		add r0,r0,#0x9800
-		add r0,r0,#0x98
-		mla r0,r7,r2,r0
 		ldr r1,[r1]
+		add r0,r1,#0x9800
+		add r0,r0,#0x98
+		mla r0,r6,r2,r0
 		mov r2,#0x44
-		mla r1,r6,r2,r1
+		mla r1,r7,r2,r1
 		bl Copy4BytesArray
+		mov r0,#1
+@@ret:
 		b ProcJumpAddress
 		.pool
 	.endarea
