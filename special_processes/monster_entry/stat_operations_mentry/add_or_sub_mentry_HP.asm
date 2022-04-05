@@ -39,8 +39,9 @@
 		mla r1,r7,r2,r1
 		ldrh r0,[r1,#+0xa]
 		add r0,r0,r6
-		cmp r0,#999
-		movgt r0,#999
+		ldr r2,=#999
+		cmp r0,r2
+		movgt r0,r2
 		cmp r0,#1
 		movlt r0,#1
 		strh r0,[r1,#+0xa]
