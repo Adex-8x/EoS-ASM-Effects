@@ -48,7 +48,7 @@
 		ldrb r2,[r0],#+0x68
 		cmp r2,#0
 		beq @@ret
-		cmp r1,#3
+		cmp r1,#4
 		addlt r1,r1,#1
 		blt @@member_loop
 @@ret:
