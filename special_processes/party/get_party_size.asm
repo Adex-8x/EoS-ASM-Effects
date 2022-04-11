@@ -43,14 +43,15 @@
     		addge r0,r0,#0x6C
 		movge r1,#0x1A0
     		mlage r0,r7,r1,r0
-		mov r1,#0x0
+		mov r1,#0
 @@member_loop:
+		cmp r1,#4
+		bge @@ret
 		ldrb r2,[r0],#+0x68
 		cmp r2,#0
 		beq @@ret
-		cmp r1,#4
-		addlt r1,r1,#1
-		blt @@member_loop
+		add r1,r1,#1
+		b @@member_loop
 @@ret:
 		mov r0,r1
 		b ProcJumpAddress
