@@ -3,7 +3,7 @@
 ; Checks if any members of the specified team have a given move (0 is Maingame, 1 is Special Episode, 2 is Rescue, and -1 is the current team)!
 ; Param 1: team_id
 ; Param 2: move_id
-; Returns: (The slot in which the species is found) + 1, or 0 if not found.
+; Returns: (The slot in which the move is found) + 1, or 0 if not found.
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
