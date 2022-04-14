@@ -37,7 +37,7 @@
 		ldr r1,[r1]
 		mov r2,#0x44
 		mla r1,r7,r2,r1
-		strh r6,[r1,#+0x2]
+		strb r6,[r1,#+0x2]
 		b ProcJumpAddress
 		.pool
 	.endarea
