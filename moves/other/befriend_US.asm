@@ -41,7 +41,7 @@
 		bne @@fail
 		bl SearchAssemblySlot
 		cmp r0,#0
-		ldrne r1,=friend_limit
+		ldreq r1,=friend_limit
 		beq @@fail
 		sub r13,r13,#0x240 ; I don't actually know how big the recruit struct is, but it's notably big?
 		mov r0,r13
@@ -72,7 +72,7 @@
 		b MoveJumpAddress
 		.pool
 	friend_limit:
-		.asciiz "But you have too many friends..."
+		.asciiz "But you have too many recruits..."
 	party_target:
 		.asciiz "But nothing happened!"
 	.endarea
