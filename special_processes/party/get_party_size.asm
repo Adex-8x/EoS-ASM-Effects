@@ -49,8 +49,7 @@
 		bge @@ret
 		ldrb r2,[r0],#+0x68
 		cmp r2,#0
-		beq @@ret
-		add r1,r1,#1
+		addne r1,r1,#1
 		b @@member_loop
 @@ret:
 		mov r0,r1
