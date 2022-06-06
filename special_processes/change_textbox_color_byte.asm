@@ -1,8 +1,8 @@
 ; ------------------------------------------------------------------------------
 ; Change Textbox Color Byte
-; Edits a byte (can be R, G, or B) of the textbox color made with the ChangeTextboxColor patch!
+; Edits a byte (can be R, G, B, or A) of the textbox color made with the ChangeTextboxColor patch!
 ; IMPORTANT: This special process ONLY works if the ChangeTextboxColor patch is applied! Do not use this process otherwise!
-; Param 1: color_byte (0-2, RGB)
+; Param 1: color_byte (0-3, RGBA)
 ; Param 2: new_value
 ; Returns: 0 if an invalid argument was passed, 1 if successful!
 ; ------------------------------------------------------------------------------
@@ -35,7 +35,7 @@
 		mov r0,#0
 		cmp r7,#0
 		blt @@ret
-		cmp r7,#2
+		cmp r7,#3
 		bgt @@ret
 		ldr r0,=TextboxColor
 		strb r6,[r0,r7]
