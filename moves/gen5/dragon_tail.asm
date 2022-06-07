@@ -38,9 +38,9 @@
 		mov r2,r8
 		mov r3,#0x100
 		bl DealDamage
+                pop r1
 		cmp r0,#0
 		beq @@ret
-		pop r1
 		cmp r0,r1
 		bge @@ret
 		mov r0,r9
