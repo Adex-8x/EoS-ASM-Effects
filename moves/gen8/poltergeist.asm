@@ -36,9 +36,7 @@
 		ldrh r1,[r0,#+0x68]
 		cmp r1,#0
 		mov r0,r9
-		ldreq r1,=no_item
-		bleq SendMessageWithStringLog
-		beq @@ret
+		beq @@no_item
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
@@ -55,6 +53,10 @@
 		bl ChangeString
 		mov r0,r9
 		ldr r1,=has_item
+		bl SendMessageWithStringLog
+		b @@ret
+@@no_item:
+		ldr r1,=no_item
 		bl SendMessageWithStringLog
 @@ret:
 		b MoveJumpAddress
