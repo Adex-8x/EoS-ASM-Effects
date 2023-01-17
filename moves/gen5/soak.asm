@@ -16,18 +16,32 @@
 .include "lib/dunlib_us.asm"
 .definelabel MoveStartAddress, 0x02330134
 .definelabel MoveJumpAddress, 0x023326CC
+.definelabel AbilityIsActiveVeneer, 0x02301D78
 
 ; For EU
 ;.include "lib/stdlib_eu.asm"
 ;.include "lib/dunlib_eu.asm"
 ;.definelabel MoveStartAddress, 0x02330B74
 ;.definelabel MoveJumpAddress, 0x0233310C
+;.definelabel AbilityIsActiveVeneer, 0x023027A4
 
 ; File creation
 .create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
 	.org MoveStartAddress
 	.area MaxSize
 
+		mov r0,r4
+		mov r1,#0x25
+		bl AbilityIsActiveVeneer
+		cmp r0,#0
+		beq @@no_forecast
+		mov r0,r9
+		mov r1,r4
+		ldr r2,=#3523
+		bl SendMessageWithIDCheckUTLog
+		mov r10,#0
+		b MoveJumpAddress
+@@no_forecast:
 		mov r1,#3 ; Water's ID. For something like Magic Powder, change to 11!
 		ldr r0,[r4,#+0xb4]
 		strb r1,[r0,#+0x5e]
@@ -40,12 +54,13 @@
 		mov r2,#0
 		bl ChangeString
 		mov r0,r9
-		ldr r1,=soak
-		bl SendMessageWithStringLog
-@@ret:
+		mov r1,r4
+		ldr r2,=soak
+		bl SendMessageWithStringCheckUTLog
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
 	soak:
-		.asciiz "Changed [string:0] to Water type!" ; If desired, change this string!
+		.asciiz "Changed [string:0] to Water type!"
 	.endarea
 .close

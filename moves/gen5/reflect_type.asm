@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Reflect Type
-; Change the target's type(s) to match the user's!
+; The user reflects the target's type, making it the same type as the target!
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
@@ -16,37 +16,49 @@
 .include "lib/dunlib_us.asm"
 .definelabel MoveStartAddress, 0x02330134
 .definelabel MoveJumpAddress, 0x023326CC
+.definelabel AbilityIsActiveVeneer, 0x02301D78
 
 ; For EU
 ;.include "lib/stdlib_eu.asm"
 ;.include "lib/dunlib_eu.asm"
 ;.definelabel MoveStartAddress, 0x02330B74
 ;.definelabel MoveJumpAddress, 0x0233310C
+;.definelabel AbilityIsActiveVeneer, 0x023027A4
 
 ; File creation
 .create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
 	.org MoveStartAddress
 	.area MaxSize
 
-		ldr r0,[r9,#+0xb4]
+		mov r0,r9
+		mov r1,#0x25
+		bl AbilityIsActiveVeneer
+		cmp r0,#0
+		beq @@no_forecast
+		mov r0,r9
+		mov r1,r4
+		ldr r2,=#3523
+		bl SendMessageWithIDCheckUTLog
+		mov r10,#0
+		b MoveJumpAddress
+@@no_forecast:
+		ldr r0,[r4,#+0xb4]
 		ldrb r1,[r0,#+0x5e]
 		ldrb r2,[r0,#+0x5f]
-		ldr r0,[r4,#+0xb4]
+		ldr r0,[r9,#+0xb4]
 		strb r1,[r0,#+0x5e]
 		strb r2,[r0,#+0x5f]
 		mov r2,#1
 		strb r2,[r0,#+0xff]
-		mov r0,#0
+		mov r0,#1
 		mov r1,r4
 		mov r2,#0
 		bl ChangeString
-		mov r0,#1
-		mov r1,r9
-		mov r2,#0
-		bl ChangeString
 		mov r0,r9
-		ldr r1,=type
-		bl SendMessageWithStringLog
+		mov r1,r4
+		ldr r2,=type
+		bl SendMessageWithStringCheckUTLog
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
 	type:

@@ -29,41 +29,41 @@
 	.org MoveStartAddress
 	.area MaxSize
 
+		sub r13,r13,#0x4
 		ldr r0,[r4,#+0xb4]
 		ldrb r1,[r0,#0x6]
 		ldrb r2,[r0,#0x8]
-		cmp r1,#1
-		cmpeq r2,#0
-		moveq r0,#1
-		movne r0,#0
+		eor r0,r1,r2
 		ldr r1,[r9,#+0xb4]
 		ldrb r2,[r1,#0x6]
 		ldrb r3,[r1,#0x8]
-		cmp r2,#1
-		cmpeq r3,#0
-		moveq r1,#1
-		movne r1,#0
+		eor r1,r2,r3
 		cmp r0,r1
 		beq @@ally_target
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
+		str r7,[r13]
 		bl DealDamage
 		b @@ret
 @@ally_target:
 		ldr r0,[r4,#+0xb4]
-		ldrsh r1,[r0, #+0x12]
-		ldrsh r0,[r0, #+0x16]
-		add r0,r0,r1 ; Compute the user's Max HP
-		mov r1,#2
-		bl EuclidianDivision
-		mov r2,r0
+		ldrsh r1,[r0,#+0x12]
+		ldrsh r0,[r0,#+0x16]
+		add r0,r0,r1
+		lsrs r2,r0,#1
+		moveq r2,#1
 		mov r0,r9
 		mov r1,r4
+		mov r3,#1
+		str r3,[r13]
 		mov r3,#0
 		bl RaiseHP
+		mov r0,#1
 @@ret:
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	.endarea

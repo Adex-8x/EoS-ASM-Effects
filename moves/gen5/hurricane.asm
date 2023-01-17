@@ -28,6 +28,7 @@
 	.org MoveStartAddress
 	.area MaxSize
 
+		sub r13,r13,#0x4
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
@@ -40,13 +41,17 @@
 		mov r2,#30
 		bl RandomChanceUT
 		cmp r0,#0
-		beq @@ret
+		beq @@success
 		mov r0,r9
 		mov r1,r4
 		mov r2,#1
 		mov r3,#0
 		bl Confuse
+@@success:
+		mov r0,#1
 @@ret:
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	.endarea

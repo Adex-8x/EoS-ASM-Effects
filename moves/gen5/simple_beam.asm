@@ -38,8 +38,10 @@
 		mov r2,#0
 		bl ChangeString
 		mov r0,r9
-		ldr r1,=type
-		bl SendMessageWithStringLog
+		mov r1,r4
+		ldr r2,=type
+		bl SendMessageWithStringCheckUTLog
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
 	type:

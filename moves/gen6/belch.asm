@@ -28,6 +28,7 @@
 	.org MoveStartAddress
 	.area MaxSize
 
+		sub r13,r13,#0x4
 		ldr r0,[r9,#+0xb4]
 		ldr r1,=#0x146
 		ldrsh r0,[r0,r1]
@@ -37,17 +38,17 @@
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
+		str r7,[r13]
 		bl DealDamage
 		b @@ret
 @@failure:
-		mov r0,#0
-		mov r1,r9
-		mov r2,#0
-		bl ChangeString
 		mov r0,r9
 		ldr r1,=hunger
-		bl SendMessageWithStringLog
+		bl SendMessageWithStringCheckULog
+		mov r0,#0
 @@ret:
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	hunger:

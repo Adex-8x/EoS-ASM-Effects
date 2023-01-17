@@ -28,21 +28,39 @@
 	.org MoveStartAddress
 	.area MaxSize
 
+		sub r13,r13,#0x4
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
+		str r7,[r13]
 		bl DealDamage
 		cmp r0,#0
 		beq @@ret
-		mov r1,#2
-		bl EuclidianDivision
-		mov r2,r0
+		lsrs r10,r0,#1
+		moveq r10,#1
+		mov r0,r9
+		mov r1,#0
+		bl RandomChanceU
+		cmp r0,#0
+		beq @@success
+		mov r2,r10
+		ldr r0,[r9,#+0xb4]
+		ldrb r1,[r0,#+0x108]
+		cmp r1,#1
+		movcc r1,#1
+		strb r1,[r0,#+0x108]
 		mov r0,r9
 		mov r1,r9
+		mov r3,#1
+		str r3,[r13]
 		mov r3,#0
 		bl RaiseHP
+@@success:
+		mov r0,#1
 @@ret:
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	.endarea

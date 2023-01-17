@@ -1,6 +1,7 @@
 ; ------------------------------------------------------------------------------
 ; Topsy-Turvy
 ; Reverses all the stat changes the target has! Boosts become nerfs and vice versa!
+; (This does not invert speed, as Super Mystery Dungeon does not do so either.)
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
@@ -16,72 +17,46 @@
 .include "lib/dunlib_us.asm"
 .definelabel MoveStartAddress, 0x02330134
 .definelabel MoveJumpAddress, 0x023326CC
+.definelabel NoClueWhatThisDoesButItWorks, 0x02001AB0
+.definelabel UpdateStatusIconFlags, 0x022E3AB4
 
 ; For EU
 ;.include "lib/stdlib_eu.asm"
 ;.include "lib/dunlib_eu.asm"
 ;.definelabel MoveStartAddress, 0x02330B74
 ;.definelabel MoveJumpAddress, 0x0233310C
+;.definelabel NoClueWhatThisDoesButItWorks, 0x02001AB0
+;.definelabel UpdateStatusIconFlags, 0x022E4464
 
 ; File creation
 .create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
 	.org MoveStartAddress
 	.area MaxSize
 
-		push r5
-		ldr r0,[r4,#+0xb4]
-		mov r12,#0x24
-		mov r3,#0x2
-		mov r5,#0xa
+		push r6,r7
+		sub r13,r13,#0x4
+		ldr r10,[r4,#+0xb4]
+		mov r2,#0x24
+		mov r1,#0x14
 @@boost_loop:
-		ldrh r1,[r0,r12]
-		cmp r1,r5
-		beq @@next_boost_iter
-		subgt r2,r1,r5
-		mulgt r2,r2,r3
-		subgt r1,r1,r2
-		sublt r2,r5,r1
-		mullt r2,r2,r3
-		addlt r1,r1,r2
-		strh r1,[r0,r12]
-@@next_boost_iter:
-		cmp r12,#0x2e
-		addlt r12,r12,#0x2
+		ldrsh r0,[r10,r2]
+		sub r0,r1,r0
+		strh r0,[r10,r2]
+		cmp r2,#0x2E
+		addlt r2,r2,#2
 		blt @@boost_loop
-		mov r12,#0x34
-		mov r5,#0x100
-		; I thought about going about this using another loop and with bitshifting, but I'm not sure if that'd be faster?
+		ldr r7,=#25597 ; For whatever reason, THIS is the upper limit checked in the StatMultiplier functions.
+		mov r6,#0x34
 @@multiplier_loop:
-		ldr r1,[r0,r12]
-		cmp r1,r5
-		beq @@next_multiplier_iter
-		push {r0,r1,r3,r12}
-		movgt r0,r1
-		movgt r1,r5
-		movlt r0,r5
-		movlt r1,r0
-		bl EuclidianDivision
-		mov r2,r0
-		pop {r0,r1,r3,r12}
-		mul r2,r2,r3
-		cmp r1,r5
-		bgt @@divide_multiplier
-		mullt r1,r1,r2
-		str r1,[r0,r12]
-		b @@next_multiplier_iter
-@@divide_multiplier:
-		push {r0,r1,r3,r12}
-		mov r0,r1
-		mov r1,r2
-		bl EuclidianDivision
-		mov r2,r0
-		pop {r0,r1,r3,r12}
-		str r2,[r0,r12]
-@@next_multiplier_iter:
-		cmp r12,#0x40
-		addlt r12,r12,#0x4
+		mov r0,#256
+		ldr r1,[r10,r6]
+		bl NoClueWhatThisDoesButItWorks
+		cmp r0,r7
+		strle r0,[r10,r6]
+		strgt r7,[r10,r6]
+		cmp r6,#0x40
+		addlt r6,r6,#4
 		blt @@multiplier_loop
-		pop r5
 		mov r0,#0
 		mov r1,r4
 		mov r2,#0
@@ -89,6 +64,11 @@
 		mov r0,r9
 		ldr r1,=flippity_flop
 		bl SendMessageWithStringLog
+		mov r0,r4
+		bl UpdateStatusIconFlags
+		mov r10,#1
+		add r13,r13,#0x4
+		pop r6,r7
 		b MoveJumpAddress
 		.pool
 	flippity_flop:

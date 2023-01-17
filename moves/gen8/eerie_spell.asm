@@ -28,31 +28,36 @@
 	.org MoveStartAddress
 	.area MaxSize
 
+		sub r13,r13,#0x4
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
+		str r7,[r13]
 		bl DealDamage
 		cmp r0,#0
 		beq @@ret
+		mov r0,r9
+		mov r1,r4
+		mov r2,#0
+		bl RandomChanceUT
+		cmp r0,#0
+		beq @@success
 		ldr r0,[r4,#+0xb4]
-		ldrsh r1,[r0,#+0x10]
-		cmp r1,#0
-		ble @@ret
 		mov r1,#0x124
 @@move_loop:
 		ldrb r2,[r0,r1]
 		tst r2,#0x10
-		bne @@success
+		bne @@move_found
 		cmp r1,#0x13c
 		addlt r1,r1,#0x8
 		blt @@move_loop
-		b @@ret ; No move was last used
-@@success:
+		b @@success
+@@move_found:
 		add r1,r1,#0x6
 		ldrb r2,[r0,r1]
 		cmp r0,#0
-		beq @@ret
+		beq @@success
 		subs r2,r2,#3
 		movmi r2,#0
 		strb r2,[r0,r1]
@@ -61,9 +66,14 @@
 		mov r2,#0
 		bl ChangeString
 		mov r0,r9
-		ldr r1,=lost_PP
-		bl SendMessageWithStringLog
+		mov r1,r4
+		ldr r2,=lost_PP
+		bl SendMessageWithStringCheckUTLog
+@@success:
+		mov r0,#1
 @@ret:
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	lost_PP:

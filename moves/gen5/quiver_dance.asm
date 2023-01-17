@@ -29,19 +29,19 @@
 	.area MaxSize
 
 		mov r0,r9
-		mov r1,r9
+		mov r1,r4
 		mov r2,#1
 		mov r3,#1
 		bl AttackStatUp
 		mov r0,r9
-		mov r1,r9
+		mov r1,r4
 		mov r2,#1
 		mov r3,#1
 		bl DefenseStatUp
 		mov r0,r9
-		mov r1,r9
+		mov r1,r4
 		bl SpeedStatUpOneStage
-@@ret:
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
 	.endarea

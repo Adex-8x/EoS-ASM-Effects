@@ -30,26 +30,31 @@
 	.org MoveStartAddress
 	.area MaxSize
 
-		ldr r1,[r4,#+0xb4]
-		ldrsh r1,[r1,#+0x10] ; Target's current HP before damage
-		push r1
+		sub r13,r13,#0x4
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
+		str r7,[r13]
 		bl DealDamage
-                pop r1
 		cmp r0,#0
 		beq @@ret
-		cmp r0,r1
-		bge @@ret
 		mov r0,r9
 		mov r1,r4
-		; NOTE: The dunlib doc says 8 will use the user's direction, but this seems invalid. I manually check user's direction here.
+		mov r2,#0
+		bl RandomChanceUT
+		cmp r0,#0
+		beq @@success
+		mov r0,r9
+		mov r1,r4
 		ldr r2,[r9,#+0xb4]
 		ldrb r2,[r2,#+0x4c]
 		bl BlowAway
+@@success:
+		mov r0,#1
 @@ret:
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	.endarea

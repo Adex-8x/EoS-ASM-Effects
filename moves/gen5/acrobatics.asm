@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Acrobatics
-; If the user is not holding an item, deal twice the damage!
+; If the user is not holding an item, deal 1.5x the damage!
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
@@ -28,20 +28,26 @@
 	.org MoveStartAddress
 	.area MaxSize
 
-		ldr r0,[r9,#+0xb4]
-		ldrh r0,[r0,#+0x66]
-		cmp r0,#0
-		movne r3,#0x100
+		sub r13,r13,#0x4
+		mov r3,#0x100
+		ldr r0,[r9,#+0xB4]
+		ldrh r1,[r0,#+0x66]
+		ldrh r2,[r0,#+0x62]
+		cmp r1,#0
+		tstne r2,#0x1
 		bne @@deal_damage
 		mov r0,r9
 		ldr r1,=no_item
-		bl SendMessageWithStringLog
-		mov r3,#0x200
+		bl SendMessageWithStringCheckULog
+		mov r3,#0x180
 @@deal_damage:
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
+		str r7,[r13]
 		bl DealDamage
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	no_item:

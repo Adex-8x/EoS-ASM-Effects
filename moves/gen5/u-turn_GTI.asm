@@ -17,86 +17,74 @@
 .definelabel MoveStartAddress, 0x02330134
 .definelabel MoveJumpAddress, 0x023326CC
 .definelabel SwapEntity, 0x022EB178
-.definelabel GetTilePointer, 0x23360FC
+.definelabel GetTilePointer, 0x023360FC
+.definelabel DIRECTIONS_XY, 0x0235171C
 
 ; For EU
 ;.include "lib/stdlib_eu.asm"
 ;.include "lib/dunlib_eu.asm"
 ;.definelabel MoveStartAddress, 0x02330B74
 ;.definelabel MoveJumpAddress, 0x0233310C
-;.definelabel GetTilePointer, 0x2336CCC
+;.definelabel GetTilePointer, 0x02336CCC
 ;.definelabel SwapEntity, 0x022EBB28
+;.definelabel DIRECTIONS_XY, 0x02352328
 
 ; File creation
 .create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
 	.org MoveStartAddress
 	.area MaxSize
 
+		sub r13,r13,#0x4
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
+		str r7,[r13]
 		bl DealDamage
 		cmp r0,#0
 		beq @@ret
+		mov r0,r9
+		mov r1,#0
+		bl RandomChanceU
+		cmp r0,#0
+		moveq r0,#1
+		beq @@ret
+		ldr r2,=DIRECTIONS_XY
+		add r3,r2,#2
 		ldr r0,[r9,#+0xb4]
-		ldrb r12,[r0,#+0x4c] ; User Direction
-		ldrh r0,[r9,#+0x4] ; User X Pos
-		ldrh r1,[r9,#+0x6] ; User Y Pos
-		; DIRECTIONS: 0 - Down, 1 - DownRight, 2 - Right, 3 - UpRight, 4 - Up, 5 - UpLeft, 6 - Left, 7 - DownLeft
-		cmp r12,#0
-		subeq r1,r1,#1
-		beq @@check_tile
-		cmp r12,#1
-		subeq r0,r0,#1
-		subeq r1,r1,#1
-		beq @@check_tile
-		cmp r12,#2
-		subeq r0,r0,#1
-		beq @@check_tile
-		cmp r12,#3
-		subeq r0,r0,#1
-		addeq r1,r1,#1
-		beq @@check_tile
-		cmp r12,#4
-		addeq r1,r1,#1
-		beq @@check_tile
-		cmp r12,#5
-		addeq r0,r0,#1
-		addeq r1,r1,#1
-		beq @@check_tile
-		cmp r12,#6
-		addeq r0,r0,#1
-		beq @@check_tile
-		; Else, 7
-		add r0,r0,#1
-		sub r1,r1,#1
+		ldrb r0,[r0,#+0x4C]
+		subs r0,r0,#4
+		addmi r0,r0,#8
+		lsl r0,r0,#2
+		ldrsh r1,[r3,r0]
+		ldrsh r0,[r2,r0]
+		ldrh r2,[r9,#+0x4]
+		ldrh r3,[r9,#+0x6]
+		add r0,r0,r2
+		add r1,r1,r3
 @@check_tile:
 		bl GetTilePointer
-		ldr r0,[r0,#+0xc]
+		ldr r0,[r0,#+0xC]
 		cmp r0,#0
-		beq @@ret ; If null, don't switch!
+		moveq r0,#1
+		beq @@ret
 		ldr r12,[r0,#+0xb4]
 		ldrb r1,[r12,#0x6]
 		ldrb r2,[r12,#0x8]
-		cmp r1,#1
-		cmpeq r2,#0
-		moveq r12,#1
-		movne r12,#0
+		eor r12,r1,r2
 		ldr r1,[r9,#+0xb4]
 		ldrb r2,[r1,#0x6]
 		ldrb r3,[r1,#0x8]
-		cmp r2,#1
-		cmpeq r3,#0
-		moveq r1,#1
-		movne r1,#0
+		eor r1,r2,r3
 		cmp r12,r1
+		movne r0,#1
 		bne @@ret
 		mov r1,r9
-		mov r2,#0
-		mov r3,#0
 		bl SwapEntity
+		mov r0,#1
 @@ret:
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	.endarea

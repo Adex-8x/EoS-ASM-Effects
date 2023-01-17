@@ -16,12 +16,14 @@
 .include "lib/dunlib_us.asm"
 .definelabel MoveStartAddress, 0x02330134
 .definelabel MoveJumpAddress, 0x023326CC
+.definelabel UpdateStatusIconFlags, 0x022E3AB4
 
 ; For EU
 ;.include "lib/stdlib_eu.asm"
 ;.include "lib/dunlib_eu.asm"
 ;.definelabel MoveStartAddress, 0x02330B74
 ;.definelabel MoveJumpAddress, 0x0233310C
+;.definelabel UpdateStatusIconFlags, 0x022E4464
 
 ; File creation
 .create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
@@ -42,17 +44,19 @@
 		strh r0,[r7]
 		strh r1,[r6]
 		pop r0-r7
-		mov r0,#0
-		mov r1,r9
-		mov r2,#0
-		bl ChangeString
 		mov r0,#1
 		mov r1,r4
 		mov r2,#0
 		bl ChangeString
 		mov r0,r9
-		ldr r1,=gotta_go_fast
-		bl SendMessageWithStringLog
+		mov r1,r4
+		ldr r2,=gotta_go_fast
+		bl SendMessageWithStringCheckUTLog
+		mov r0,r9
+		bl UpdateStatusIconFlags
+		mov r0,r4
+		bl UpdateStatusIconFlags
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
 	gotta_go_fast:

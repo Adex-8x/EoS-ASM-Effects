@@ -16,6 +16,7 @@
 .include "lib/dunlib_us.asm"
 .definelabel MoveStartAddress, 0x02330134
 .definelabel MoveJumpAddress, 0x023326CC
+.definelabel DoMoveOhko, 0x02328B88
 .definelabel BlowAway, 0x0231FDE0
 
 ; For EU
@@ -23,6 +24,7 @@
 ;.include "lib/dunlib_eu.asm"
 ;.definelabel MoveStartAddress, 0x02330B74
 ;.definelabel MoveJumpAddress, 0x0233310C
+;.definelabel DoMoveOhko, 0x023295F4
 ;.definelabel BlowAway, 0x02320848
 
 ; File creation
@@ -30,17 +32,19 @@
 	.org MoveStartAddress
 	.area MaxSize
 
-		mov r0,r4
-		ldr r1,=#9999
-		bl ConstDamage
+		mov r0,r9
+		mov r1,r4
+		mov r2,r8
+		mov r3,r7
+		bl DoMoveOhko
+		mov r10,r0
 		mov r0,r9
 		ldr r1,=recoil
-		bl SendMessageWithStringLog
+		bl SendMessageWithStringCheckULog
 		ldr r2,[r9,#+0xb4]
-		ldrb r2,[r2,#+0x4c] ; User Direction
-		add r2,r2,#4
-		cmp r2,#7
-		subgt r2,r2,#8
+		ldrb r2,[r2,#+0x4c]
+		subs r2,r2,#4
+		addmi r2,r2,#8
 		mov r0,r4
 		mov r1,r9
 		bl BlowAway

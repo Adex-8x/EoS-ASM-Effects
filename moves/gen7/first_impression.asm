@@ -28,14 +28,21 @@
 	.org MoveStartAddress
 	.area MaxSize
 
+		sub r13,r13,#0x4
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
-		mov r3,#0x100
+		mov r3,#0x100	
+		str r7,[r13]
 		bl DealDamage
+		cmp r0,#0
+		beq @@ret
 		ldrh r0,[r8,#+0x2]
 		orr r0,r0,#0x1
 		strh r0,[r8,#+0x2]
+@@ret:
+		mov r10,r0
+		add r13,r13,#0x4
 		b MoveJumpAddress
 		.pool
 	.endarea

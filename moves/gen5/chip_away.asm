@@ -32,7 +32,8 @@
 		ldrsh r1,[r0,#+0x28]
 		ldrsh r2,[r0,#+0x2e]
 		ldr r3,[r0,#+0x3c]
-		push {r0,r1,r2,r3}
+		push r0-r3
+		sub r13,r13,#0x4
 		mov r1,#10
 		strh r1,[r0,#+0x28]
 		strh r1,[r0,#+0x2e]
@@ -42,8 +43,11 @@
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
+		str r7,[r13]
 		bl DealDamage
-		pop {r0,r1,r2,r3}
+		mov r10,r0
+		add r13,r13,#0x4
+		pop r0-r3
 		strh r1,[r0,#+0x28]
 		strh r2,[r0,#+0x2e]
 		str r3,[r0,#+0x3c]

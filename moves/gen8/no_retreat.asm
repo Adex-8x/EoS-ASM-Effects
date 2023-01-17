@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; No Retreat
-; Raises all of the user's stats by one, but immobilizes it!
+; Raises all of the target's stats by one, but immobilizes it!
 ; ------------------------------------------------------------------------------
 
 .relativeinclude on
@@ -28,7 +28,20 @@
 	.org MoveStartAddress
 	.area MaxSize
 
-		; This won't be elegant in the slightest
+		ldr r0,[r4,#+0xb4]
+		ldrb r0,[r0,#+0xc4]
+		cmp r0,#2
+		bne @@success
+		mov r0,#0
+		mov r1,r4
+		mov r2,#0
+		bl ChangeString
+		mov r0,r9
+		ldr r1,=failure
+		bl SendMessageWithStringCheckULog
+		mov r10,#0
+		b MoveJumpAddress
+@@success:
 		mov r0,r9
 		mov r1,r4
 		mov r2,#0
@@ -58,7 +71,10 @@
 		mov r1,r4
 		mov r2,#0
 		bl Immobilize
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
+	failure:
+		.asciiz "But [string:0] is already immobile!"
 	.endarea
 .close

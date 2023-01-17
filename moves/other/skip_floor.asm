@@ -34,6 +34,7 @@
 		ldr r0,[r0]
 		mov r1,#1
 		strb r1,[r0,#+0x8]
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
 	.endarea

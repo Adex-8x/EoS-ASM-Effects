@@ -38,6 +38,7 @@
 		mov r2,#1
 		mov r3,#1
 		bl SpeedStatDown
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
 	.endarea

@@ -33,6 +33,7 @@
 		ldrsh r2,[r0,#+0x2a]
 		ldr r3,[r0,#+0x40]
 		push {r0,r1,r2,r3}
+		sub r13,r13,#0x4
 		ldrb r1,[r0,#+0x1c]
 		strb r1,[r0,#+0x1d]
 		ldrsh r1,[r0,#+0x28]
@@ -43,7 +44,10 @@
 		mov r1,r4
 		mov r2,r8
 		mov r3,#0x100
+		str r7,[r13]
 		bl DealDamage
+		mov r10,r0
+		add r13,r13,#0x4
 		pop {r0,r1,r2,r3}
 		strb r1,[r0,#+0x1d]
 		strh r2,[r0,#+0x2a]

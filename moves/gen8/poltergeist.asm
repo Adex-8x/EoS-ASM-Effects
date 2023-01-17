@@ -28,38 +28,53 @@
 	.org MoveStartAddress
 	.area MaxSize
 
-		mov r0,#0
-		mov r1,r4
-		mov r2,#0
-		bl ChangeString
+		sub r13,r13,#0x4
 		ldr r0,[r4,#+0xb4]
-		ldrh r1,[r0,#+0x68]
+		ldrh r1,[r0,#+0x66]
+		ldrh r2,[r0,#+0x62]
 		cmp r1,#0
-		mov r0,r9
+		tstne r2,#0x1
 		beq @@no_item
+		mov r0,r9
 		mov r1,r4
 		mov r2,r8
+		str r7,[r13]
 		mov r3,#0x100
 		bl DealDamage
 		cmp r0,#0
 		beq @@ret
-		ldr r0,[r4,#+0xb4]
-		ldrsh r1,[r0,#+0x10]
-		cmp r1,#0
-		ble @@ret
+		mov r0,r9
+		mov r1,r4
+		mov r2,#0
+		bl RandomChanceUT
+		cmp r0,#0
+		beq @@success
+		bl TargetToString0
+		mov r0,r9
+		mov r1,r4
+		ldr r2,=has_item
+		bl SendMessageWithStringCheckUTLog
+@@success:
+		mov r0,#1
+		b @@ret
+@@no_item:
+		bl TargetToString0
+		mov r0,r9
+		mov r1,r4
+		ldr r2,=no_item
+		bl SendMessageWithStringCheckUTLog
+		mov r0,#0
+@@ret:	
+		mov r10,r0
+		add r13,r13,#0x4
+		b MoveJumpAddress
+TargetToString0:
+		push r14
 		mov r0,#0
 		mov r1,r4
 		mov r2,#0
 		bl ChangeString
-		mov r0,r9
-		ldr r1,=has_item
-		bl SendMessageWithStringLog
-		b @@ret
-@@no_item:
-		ldr r1,=no_item
-		bl SendMessageWithStringLog
-@@ret:
-		b MoveJumpAddress
+		pop r15
 		.pool
 	has_item:
 		.asciiz "[string:0] was attacked by[R]its own item!"

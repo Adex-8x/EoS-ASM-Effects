@@ -28,6 +28,7 @@
 .create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
 	.org MoveStartAddress
 	.area MaxSize
+
 		mov r0,r9
 		mov r1,r4
 		mov r2,r8
@@ -35,13 +36,13 @@
 		bl RapidSpin
 		mov r10,r0
 		cmp r0,#0
-		beq @@ret
+		beq MoveJumpAddress
 		mov r0,r9
 		mov r1,r9
 		mov r2,#0
 		mov r3,#0
 		bl SpeedStatUpOneStage
-@@ret:
+		mov r10,#1
 		b MoveJumpAddress
 		.pool
 	.endarea
