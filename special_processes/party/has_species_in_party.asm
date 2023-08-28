@@ -44,15 +44,19 @@
     		addge r0,r0,#0x6C
 		movge r1,#0x1A0
     		mlage r0,r7,r1,r0
-		add r0,r0,#0xc
 		mov r1,#0x1
 @@member_loop:
-		ldrh r2,[r0],#+0x68
+		ldrb r2,[r0]
+		tst r2,#0x1
+		beq @@member_loop_next_iter
+		ldrsh r2,[r0,#+0xC]
 		cmp r2,r6
 		moveq r0,r1
 		beq @@ret
+@@member_loop_next_iter:
 		cmp r1,#4
 		addlt r1,r1,#1
+		addlt r0,r0,#0x68
 		blt @@member_loop
 		mov r0,#0
 @@ret:
