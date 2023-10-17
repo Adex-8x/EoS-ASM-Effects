@@ -27,7 +27,7 @@
 ;.include "lib/stdlib_eu.asm"
 ;.definelabel ProcStartAddress, 0x022E7B88
 ;.definelabel ProcJumpAddress, 0x022E8400
-;.definelabel AssemblyPointer, 0x020B138C
+;.definelabel AssemblyPointer, 0x020B1364
 ;.definelabel GetEvolutions, 0x02054204
 ;.definelabel IsNamedAfterSpecies, 0x020563EC
 ;.definelabel GetNameString, 0x02052A00
