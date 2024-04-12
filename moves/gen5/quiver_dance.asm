@@ -40,6 +40,8 @@
 		bl DefenseStatUp
 		mov r0,r9
 		mov r1,r4
+		mov r2,#4
+		mov r3,#1
 		bl SpeedStatUpOneStage
 		mov r10,#1
 		b MoveJumpAddress
