@@ -16,14 +16,12 @@
 .include "lib/dunlib_us.asm"
 .definelabel MoveStartAddress, 0x02330134
 .definelabel MoveJumpAddress, 0x023326CC
-.definelabel BlowAway, 0x0231FDE0
 
 ; For EU
 ;.include "lib/stdlib_eu.asm"
 ;.include "lib/dunlib_eu.asm"
 ;.definelabel MoveStartAddress, 0x02330B74
 ;.definelabel MoveJumpAddress, 0x0233310C
-;.definelabel BlowAway, 0x02320848
 
 ; File creation
 .create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
