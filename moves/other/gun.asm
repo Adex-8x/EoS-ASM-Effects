@@ -17,7 +17,6 @@
 .definelabel MoveStartAddress, 0x02330134
 .definelabel MoveJumpAddress, 0x023326CC
 .definelabel DoMoveOhko, 0x02328B88
-.definelabel BlowAway, 0x0231FDE0
 
 ; For EU
 ;.include "lib/stdlib_eu.asm"
@@ -25,7 +24,6 @@
 ;.definelabel MoveStartAddress, 0x02330B74
 ;.definelabel MoveJumpAddress, 0x0233310C
 ;.definelabel DoMoveOhko, 0x023295F4
-;.definelabel BlowAway, 0x02320848
 
 ; File creation
 .create "./code_out.bin", 0x02330134 ; For EU: 0x02330B74
